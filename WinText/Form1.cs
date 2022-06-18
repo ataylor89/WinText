@@ -5,6 +5,7 @@ namespace WinText
         private string filePath;
         private OpenFileDialog openFileDialog;
         private SaveFileDialog saveFileDialog;
+        private FontDialog fontDialog;
 
         public Form1()
         {
@@ -19,6 +20,9 @@ namespace WinText
             saveFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
             saveFileDialog.FilterIndex = 2;
             saveFileDialog.RestoreDirectory = true;
+            fontDialog = new FontDialog();
+            richTextBox.Font = new Font("Segoe Print", 12, FontStyle.Regular);
+            richTextBox.ForeColor = System.Drawing.Color.Maroon;
         }
 
         private void newDocument(object sender, EventArgs e)
@@ -86,6 +90,20 @@ namespace WinText
         private void pasteSelection(object sender, EventArgs e)
         {
             richTextBox.Paste();
+        }
+
+        private void setFont(object sender, EventArgs e)
+        {
+            fontDialog.ShowColor = true;
+
+            fontDialog.Font = richTextBox.Font;
+            fontDialog.Color = richTextBox.ForeColor;
+
+            if (fontDialog.ShowDialog() != DialogResult.Cancel)
+            {
+                richTextBox.Font = fontDialog.Font;
+                richTextBox.ForeColor = fontDialog.Color;
+            }
         }
     }
 }
